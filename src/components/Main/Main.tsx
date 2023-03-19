@@ -20,7 +20,7 @@ const Main = ({ chatroomName, handleSignOut }: MainProps) => {
   const [newMessage, setNewMessage] = useState("");
   const [messages, setMessages] = useState<IMessage[]>([]);
   const [user] = useAuthState(auth);
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(false);
   const messagesEndRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -38,11 +38,11 @@ const Main = ({ chatroomName, handleSignOut }: MainProps) => {
       });
 
       setMessages(messages);
-      setLoading(false);
+      setLoading(true);
     });
 
     return () => unsubscribe();
-  }, [chatroomName]);
+  }, []);
 
   useEffect(() => {
     if (messagesEndRef.current) {
@@ -62,12 +62,18 @@ const Main = ({ chatroomName, handleSignOut }: MainProps) => {
     setNewMessage("");
   };
 
-  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    addMessage();
+  const isInputEmpty = () => {
+    return newMessage.trim() === "";
   };
 
-  if (loading) {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    if (!isInputEmpty()) {
+      addMessage();
+    }
+  };
+
+  if (!loading) {
     return (
       <div className="loading">
         <CircularProgress />
@@ -76,7 +82,9 @@ const Main = ({ chatroomName, handleSignOut }: MainProps) => {
   }
 
   const handleSendClick = async () => {
-    addMessage();
+    if (!isInputEmpty()) {
+      addMessage();
+    }
   };
 
   return (
