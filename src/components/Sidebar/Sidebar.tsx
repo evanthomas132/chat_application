@@ -23,7 +23,7 @@ const Sidebar = ({ handleSignOut }: SidebarProps) => {
   const navigate = useNavigate();
 
   const backFunction = () => {
-    navigate("/");
+    navigate("/chatroom");
   };
 
   return (
