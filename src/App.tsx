@@ -24,7 +24,7 @@ function App() {
     cookies.remove("auth-token");
     setIsAuth(false);
     setChatroomName(null);
-    navigate("/login");
+    navigate("/");
   };
 
   if (isLoading) {
@@ -41,7 +41,7 @@ function App() {
     <div className="App">
       <Routes>
         <Route
-          path="/"
+          path="/chatroom"
           element={
             <Chatroom
               chatroomName={chatroomName ?? ""}
@@ -60,7 +60,7 @@ function App() {
             />
           }
         />
-        <Route path="/login" element={!isAuth && <Login />} />
+        <Route path="/" element={<Login />} />
       </Routes>
     </div>
   );

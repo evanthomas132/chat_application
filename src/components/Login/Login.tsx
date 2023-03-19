@@ -13,7 +13,7 @@ const Login = () => {
   const googleSignIn = async () => {
     const result = await signInWithPopup(auth, provider)
     cookies.set("auth-token", result.user.refreshToken)
-    navigate('/')
+    navigate('/chatroom')
 
 
   };
